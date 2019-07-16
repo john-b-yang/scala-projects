@@ -1,6 +1,6 @@
 /*
  * Part 2: Parsing - Converting from a regex string to a tree representation (Combinator Library)
- * 
+ *
  * With Scala's parser combinator library, we can directly write rules describing our language
  * Order of Operations: Operators "bind" characters with different strengths, so we parse the
  * weakest operators, represented earlier in the tree, then stronger operators closer to the leaves.
