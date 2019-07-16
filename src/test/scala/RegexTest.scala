@@ -5,7 +5,7 @@ class RegexTest extends WordSpec with Matchers {
     "match these basic regexes" in {
       Regex.fullMatch("ab", "ab") should be(true)
       Regex.fullMatch("abbbbb", "ab+") should be(true)
-      Regex.fullMatch("bbbbb", "ab+") should be(true)
+      Regex.fullMatch("bbbbb", "ab+") should be(false)
       Regex.fullMatch("aaabbb", "a+b+") should be(true)
       Regex.fullMatch("ababa", "a+b+") should be(false)
       Regex.fullMatch("aaa", "a*") should be(true)
