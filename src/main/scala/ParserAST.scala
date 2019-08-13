@@ -27,12 +27,12 @@ object RegexParser extends RegexParsers {
   def literal: Parser[RegexExpr] = charLiteral | parenExpr
 
   /* + and * bindings */
-  def repeat: Parser[RegexExpr] = literal <~ "*" ^^ { case l => Repeat(l) } // *
-  def plus: Parser[RegexExpr] = literal <~ "+" ^^ { case p => Plus(p) } // +
+  def repeat: Parser[RegexExpr] = literal <~ "*" ^^ (l => Repeat(l)) // *
+  def plus: Parser[RegexExpr] = literal <~ "+" ^^ (p => Plus(p)) // +
   def lowExpr: Parser[RegexExpr] = repeat | plus | literal
 
   /* Concatenation bindings */
-  def concat: Parser[RegexExpr] = rep(lowExpr) ^^ { case list => listToConcat(list)}
+  def concat: Parser[RegexExpr] = rep(lowExpr) ^^ (list => listToConcat(list))
   def midExpr: Parser[RegexExpr] = concat | lowExpr
 
   /* Or (|) Bindings */
