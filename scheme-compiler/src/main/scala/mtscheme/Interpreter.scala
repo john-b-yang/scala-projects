@@ -4,12 +4,13 @@ package mtscheme
 // Case classes
 
 sealed trait ValueT
-case class Num(v: BigDecimal) extends ValueT
+case class Num(v: Double) extends ValueT
 case class Bool(v: Boolean) extends ValueT
 case class Name(v: String) extends ValueT
 
 sealed trait ExprT
-case class NullExpr() extends ExprT
+//case class NullExpr() extends ExprT
+case object NullExpr extends ExprT
 case class Comb(v: List[ExprT]) extends ExprT
 case class EList(v: List[ExprT]) extends ExprT
 case class Func(args: List[ValueT], body: List[ExprT]) extends ExprT
@@ -22,7 +23,7 @@ case class Value(v: ValueT) extends ExprT
 object Interpreter {
 
   def eval(env: Env, expr: ExprT): (Env, ExprT) = expr match {
-    case NullExpr()       => throw new IllegalStateException("invalid interpreter state")
+    case NullExpr      => throw new IllegalStateException("invalid interpreter state")
     case Comb(List())     => throw new IllegalStateException("invalid combination")
     case Comb(h :: t)     =>
       eval(env, h) match {
@@ -57,7 +58,7 @@ object Interpreter {
 
   // Eval a combination (a list of expressions), return the value of the last one
   def evalAll(env: Env, comb: List[ExprT]): (Env, ExprT) = comb match {
-    case List() => (env, NullExpr())
+    case List() => (env, NullExpr)
     case h :: t => {
       val (nEnv, res) = eval(env, h)
       t.length match {
